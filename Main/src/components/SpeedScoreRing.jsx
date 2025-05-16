@@ -7,14 +7,14 @@ export default function SpeedScoreRing({ score = 85 }) {
   const circumference = 2 * Math.PI * normalizedRadius;
   const offset = circumference - (score / 100) * circumference;
 
+  let ringColor = '#d62828'; // default red
+  if (score >= 90) ringColor = '#2e7d32'; // green
+  else if (score >= 50) ringColor = '#f9a825'; // yellow
+
   return (
     <div className="metric-card">
       <h2>Speed Score</h2>
-      <svg
-        height={radius * 2}
-        width={radius * 2}
-        className="speed-ring"
-      >
+      <svg height={radius * 2} width={radius * 2}>
         <circle
           stroke="#eee"
           fill="transparent"
@@ -24,11 +24,11 @@ export default function SpeedScoreRing({ score = 85 }) {
           cy={radius}
         />
         <circle
-          stroke="var(--primary-color)"
+          stroke={ringColor}
           fill="transparent"
           strokeWidth={stroke}
           strokeLinecap="round"
-          strokeDasharray={circumference + ' ' + circumference}
+          strokeDasharray={`${circumference} ${circumference}`}
           strokeDashoffset={offset}
           r={normalizedRadius}
           cx={radius}
@@ -40,7 +40,7 @@ export default function SpeedScoreRing({ score = 85 }) {
           dominantBaseline="middle"
           textAnchor="middle"
           fontSize="1.2rem"
-          fill="var(--text-color)"
+          fill="#333"
           fontWeight="bold"
         >
           {score}

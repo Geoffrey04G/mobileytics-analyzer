@@ -1,30 +1,54 @@
-import { useState } from 'react';
-import './AnalyzeForm.css';
+import React, { useState } from 'react';
 
-export default function AnalyzeForm() {
+export default function AnalyzeForm({ onAnalyzeComplete }) {
   const [url, setUrl] = useState('');
-  const [resultText, setResultText] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
-  const handleSubmit = (e) => {
+  const API_KEY = 'AIzaSyDUpwgbQFs4T6wMDvu4Gzyzq-Je-8jx2NA'; // Keep this safe in real apps
+
+  const handleAnalyze = async (e) => {
     e.preventDefault();
-    setResultText(`Analyzing ${url}...`);
-    // Placeholder for backend integration
+    setError('');
+    setLoading(true);
+
+    try {
+      const response = await fetch(
+        `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodeURIComponent(url)}&key=${API_KEY}`
+      );
+      const data = await response.json();
+
+      const lcp = data.lighthouseResult.audits['largest-contentful-paint'].displayValue;
+      const fid = data.lighthouseResult.audits['max-potential-fid'].displayValue;
+      const cls = data.lighthouseResult.audits['cumulative-layout-shift'].displayValue;
+
+      const score = data.lighthouseResult.categories.performance.score * 100;
+
+      onAnalyzeComplete({ LCP: lcp, FID: fid, CLS: cls, score });
+    } catch (err) {
+      console.error(err);
+      setError('Failed to fetch performance data. Please try again.');
+    }
+
+    setLoading(false);
   };
 
   return (
     <div className="analyzer-container">
       <h2>Analyze Website Performance</h2>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleAnalyze}>
         <input
           type="url"
-          placeholder="Enter website URL"
+          placeholder="Enter full website URL (https://...)"
           value={url}
           onChange={(e) => setUrl(e.target.value)}
           required
         />
-        <button type="submit">Analyze</button>
+        <button type="submit" disabled={loading}>
+          {loading ? 'Analyzing...' : 'Analyze'}
+        </button>
       </form>
-      <div className="result">{resultText}</div>
+      {error && <p style={{ color: 'red' }}>{error}</p>}
     </div>
   );
 }
