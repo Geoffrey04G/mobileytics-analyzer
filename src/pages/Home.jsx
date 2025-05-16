@@ -15,23 +15,35 @@ export default function Home() {
       <Header />
       <Block
         padding="scale600"
-        maxWidth="800px"
+        maxWidth="1000px"
+        width="100%"
         margin="0 auto"
         display="flex"
         flexDirection="column"
         alignItems="center"
         justifyContent="flex-start"
-        minHeight="calc(100vh - 120px)"
+        overrides={{
+          Block: {
+            style: {
+              minHeight: "calc(100vh - 120px)",
+              padding: "1rem"
+            }
+          }
+        }}
       >
         <HeadingMedium marginBottom="scale600" $style={{ textAlign: 'center' }}>
-          Welcome to Mobileytics Analyzer
+          Welcome to Mobilytics Analyzer
         </HeadingMedium>
 
-        <ParagraphMedium marginBottom="scale800" $style={{ textAlign: 'center', maxWidth: '600px' }}>
+        <ParagraphMedium
+          marginBottom="scale800"
+          $style={{ textAlign: 'center', maxWidth: '600px' }}
+        >
           Analyze your mobile website's performance with real Google Web Vitals metrics.
         </ParagraphMedium>
 
         <AnalyzeForm onAnalyzeComplete={setMetrics} />
+        
         {metrics && (
           <>
             <SpeedScoreRing score={metrics.score} />

@@ -2,12 +2,8 @@ import React from 'react';
 import Home from './pages/Home';
 import './styles/theme.css';
 
-function App() {
-  return (
-    <div className="App">
-      <Home />
-    </div>
-  );
-}
+const App = () => {
+  return <Home />;
+};
 
 export default App;

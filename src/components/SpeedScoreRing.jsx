@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function SpeedScoreRing({ score = 85 }) {
+export default function SpeedScoreRing({ score = 0 }) {
   const radius = 45;
   const stroke = 8;
   const normalizedRadius = radius - stroke / 2;
@@ -33,6 +33,7 @@ export default function SpeedScoreRing({ score = 85 }) {
           r={normalizedRadius}
           cx={radius}
           cy={radius}
+          transform={`rotate(-90 ${radius} ${radius})`}
         />
         <text
           x="50%"
@@ -43,7 +44,7 @@ export default function SpeedScoreRing({ score = 85 }) {
           fill="#333"
           fontWeight="bold"
         >
-          {score}
+          {Math.round(score)}
         </text>
       </svg>
       <p className="metric-desc">Overall Performance</p>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'; 
 
 export default function AnalyzeForm({ onAnalyzeComplete }) {
   const [url, setUrl] = useState('');
@@ -17,6 +17,10 @@ export default function AnalyzeForm({ onAnalyzeComplete }) {
         `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodeURIComponent(url)}&key=${API_KEY}`
       );
       const data = await response.json();
+
+      if (data.error) {
+        throw new Error(data.error.message || 'API error occurred');
+      }
 
       const lcp = data.lighthouseResult.audits['largest-contentful-paint'].displayValue;
       const fid = data.lighthouseResult.audits['max-potential-fid'].displayValue;
@@ -49,6 +53,13 @@ export default function AnalyzeForm({ onAnalyzeComplete }) {
         </button>
       </form>
       {error && <p style={{ color: 'red' }}>{error}</p>}
+      {loading && (
+        <div className="loader" aria-label="Loading animation">
+          <span className="dot"></span>
+          <span className="dot"></span>
+          <span className="dot"></span>
+        </div>
+      )}
     </div>
   );
 }

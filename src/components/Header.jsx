@@ -1,81 +1,26 @@
-import * as React from "react";
-import {
-  HeaderNavigation,
-  ALIGN,
-  StyledNavigationList,
-  StyledNavigationItem
-} from "baseui/header-navigation";
-import { StyledLink } from "baseui/link";
-import { Button } from "baseui/button";
+import React from 'react';
+import '../styles/theme.css';
 
-export default function Header() {
+const Header = () => {
   return (
-    <HeaderNavigation
-      overrides={{
-        Root: {
-          style: {
-            backgroundColor: "#1f3a93",
-            color: "#fff",
-            padding: "0 2rem"
-          }
-        }
-      }}
-    >
-      <StyledNavigationList $align={ALIGN.left}>
-        <StyledNavigationItem>
-          <span style={{ fontWeight: "bold", fontSize: "1.25rem", color: "#fff" }}>
-            Mobileytics Analyzer
-          </span>
-        </StyledNavigationItem>
-      </StyledNavigationList>
-
-      <StyledNavigationList $align={ALIGN.center}>
-        {["Features", "Pricing", "Resources", "Blog"].map((item) => (
-          <StyledNavigationItem key={item}>
-            <StyledLink
-              href="#"
-              style={{
-                color: "#fff",
-                textDecoration: "none",
-                margin: "0 1rem"
-              }}
-            >
-              {item}
-            </StyledLink>
-          </StyledNavigationItem>
-        ))}
-      </StyledNavigationList>
-
-      <StyledNavigationList $align={ALIGN.right}>
-        <StyledNavigationItem>
-          <Button
-            kind="tertiary"
-            overrides={{
-              BaseButton: {
-                style: {
-                  color: "#fff"
-                }
-              }
-            }}
-          >
-            Log In
-          </Button>
-        </StyledNavigationItem>
-        <StyledNavigationItem>
-          <Button
-            kind="primary"
-            overrides={{
-              BaseButton: {
-                style: {
-                  backgroundColor: "#4da6ff"
-                }
-              }
-            }}
-          >
-            Get Started for Free
-          </Button>
-        </StyledNavigationItem>
-      </StyledNavigationList>
-    </HeaderNavigation>
+    <header>
+      <div className="nav-container">
+        <h1>Mobilytics Analyzer</h1>
+        <nav>
+          <ul className="nav-links">
+            <li><a href="#">Features</a></li>
+            <li><a href="#">Pricing</a></li>
+            <li><a href="#">Resources</a></li>
+            <li><a href="#">Blog</a></li>
+          </ul>
+          <div className="nav-buttons">
+            <button className="nav-btn">Log In</button>
+            <button className="nav-btn">Get Started for Free</button>
+          </div>
+        </nav>
+      </div>
+    </header>
   );
-}
+};
+
+export default Header;
