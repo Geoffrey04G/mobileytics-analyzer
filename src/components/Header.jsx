@@ -5,7 +5,13 @@ const Header = () => {
   return (
     <header>
       <div className="nav-container">
-        <h1>Mobilytics Analyzer</h1>
+        <div className="brand-section">
+          <img src="/images/logo.png" alt="Logo" className="logo-img" />
+          <div className="title-group">
+            <h1>Mobilytics Analyzer</h1>
+            <p className="tagline">• ANALYZE • OPTIMIZE • THRIVE</p>
+          </div>
+        </div>
         <nav>
           <ul className="nav-links">
             <li><a href="#">Features</a></li>
